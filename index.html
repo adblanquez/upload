@@ -14,15 +14,15 @@
     --bg:#EDF0F5;
     --paper:#FFFFFF;
     --paper-alt:#E3E8F0;
-    --ink:#0F1B33;
+    --ink:#00004F;
     --ink-muted:#5B6478;
     --ink-faint:#8C93A4;
     --line:#CBD3E0;
-    --line-strong:#0F1B33;
-    --coral:#FF5B3C;
-    --coral-soft:#FFE2D9;
-    --teal:#0F9E96;
-    --teal-soft:#D8F2EF;
+    --line-strong:#00004F;
+    --coral:#4472C4;
+    --coral-soft:#E4EAF9;
+    --teal:#ED7D31;
+    --teal-soft:#FCE7D7;
     --amber:#F2A626;
     --radius:14px;
     --shadow: 0 1px 0 rgba(15,27,51,.04), 0 8px 24px -12px rgba(15,27,51,.18);
@@ -159,6 +159,22 @@
   .lb-pct{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-align:right; color:var(--ink-muted);}
 
   .empty-note{font-size:13px; color:var(--ink-faint); text-align:center; padding:40px 0;}
+
+  .adgroup-table{width:100%; border-collapse:collapse; font-size:13px; min-width:560px;}
+  .adgroup-table thead th{
+    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ink-faint); font-weight:700; padding:0 10px 10px; border-bottom:1.5px solid var(--line-strong);
+  }
+  .adgroup-table thead th:not(:first-child){text-align:right;}
+  .adgroup-table tbody td{padding:9px 10px; border-bottom:1px solid var(--line);}
+  .adgroup-table tbody tr:hover{background:var(--paper-alt);}
+  .adgroup-table td.num{text-align:right;}
+  .adgroup-table td.agt-name{max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500;}
+  .adgroup-table tfoot td{
+    padding:12px 10px; border-top:2px solid var(--line-strong); font-weight:700;
+    font-size:13px; text-align:right; color:var(--ink);
+  }
+  .adgroup-table tfoot td:first-child{text-align:left; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:11.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.05em;}
   #dash-error{display:none; background:var(--coral-soft); border:1px solid var(--coral); color:#8C2A15;
     padding:12px 16px; border-radius:10px; font-size:13px; margin-bottom:16px;}
 
@@ -182,7 +198,7 @@
   </div>
 
   <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Subir archivo Excel">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0F1B33" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00004F" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
     <h3>Arrastra tu archivo .xlsx aquí</h3>
     <p>o haz clic para seleccionarlo desde tu equipo</p>
     <input type="file" id="file-input" accept=".xlsx,.xls">
@@ -230,7 +246,8 @@
     <div class="card">
       <h4>Franja horaria</h4>
       <div class="meta">% IMPRESIONES POR DAYPART</div>
-      <div id="daypart-strip"></div>
+      <div class="chart-wrap"><canvas id="chart-daypart"></canvas></div>
+      <div class="strip-legend" id="daypart-legend"></div>
     </div>
 
     <div class="card">
@@ -244,6 +261,20 @@
       <div class="meta">TOP 9 GÉNEROS + "OTROS" · % SOBRE IMPRESIONES</div>
       <div class="chart-wrap"><canvas id="chart-genre"></canvas></div>
     </div>
+
+    <div class="card full">
+      <h4>Detalle por Ad Group</h4>
+      <div class="meta">IMPRESIONES, COMPLETED VIEWS Y VCR POR AD GROUP</div>
+      <div style="overflow-x:auto;">
+        <table class="adgroup-table" id="adgroup-table">
+          <thead>
+            <tr><th>Ad Group</th><th>Publisher</th><th>Impresiones</th><th>Completed Views</th><th>VCR</th></tr>
+          </thead>
+          <tbody id="adgroup-tbody"></tbody>
+          <tfoot id="adgroup-tfoot"></tfoot>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -254,13 +285,28 @@
 const PUBLISHERS = ['Atresmedia','Disney','Mediaset','Netflix','Pulsa','Rakuten','SamsungTV','Samsung','TitanOs','Tv3','Sky'];
 const PUBLISHER_LABEL = {Samsung:'SamsungTV', Tv3:'TV3', Sky:'SkyShowtime'};
 const DAYPARTS = [
-  {key:'madrugada', label:'Madrugada', range:'01:00–06:00', color:'#0F1B33', test:h=>h>=1&&h<=6},
-  {key:'manana',    label:'Mañana',    range:'07:00–12:00', color:'#0F9E96', test:h=>h>=7&&h<=12},
-  {key:'tarde',     label:'Tarde',     range:'13:00–18:00', color:'#F2A626', test:h=>h>=13&&h<=18},
-  {key:'noche',     label:'Noche',     range:'19:00–00:00', color:'#FF5B3C', test:h=>true},
+  {key:'madrugada', label:'Madrugada', range:'01:00–06:00', color:'#00004F', test:h=>h>=1&&h<=6},
+  {key:'manana',    label:'Mañana',    range:'07:00–12:00', color:'#5B9BD5', test:h=>h>=7&&h<=12},
+  {key:'tarde',     label:'Tarde',     range:'13:00–18:00', color:'#FFC000', test:h=>h>=13&&h<=18},
+  {key:'noche',     label:'Noche',     range:'19:00–00:00', color:'#ED7D31', test:h=>true},
 ];
 
-function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+function norm(s){
+  return String(s||'')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // quita acentos (ñ, á, é...)
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g,'');
+}
+
+const KW = {
+  campaign:  [['campa']],                    // Campaign / Campaña
+  week:      [['week'],['semana']],
+  hour:      [['hour'],['hora']],
+  genre:     [['genre'],['genero']],
+  adgroup:   [['ad','group'],['grupo']],
+  impression:[['impres']],                   // Impressions / Impresiones
+  completed: [['complet']],                  // Completed / Completadas
+};
 
 function findCol(headers, keywordsList){
   // keywordsList: array of arrays of required substrings (any group matches)
@@ -282,12 +328,12 @@ function detectSheets(wb){
     const rows = sheetRows(wb.Sheets[name]);
     if(!rows.length) continue;
     const headers = Object.keys(rows[0]);
-    const hasCampaign = findCol(headers,[['campaign']]);
+    const hasCampaign = findCol(headers, KW.campaign);
     if(!hasCampaign) continue;
-    const hasWeek = findCol(headers,[['week']]);
-    const hasHour = findCol(headers,[['hour']]);
-    const hasGenre = findCol(headers,[['genre']]);
-    const hasAdGroup = findCol(headers,[['ad','group']]);
+    const hasWeek = findCol(headers, KW.week);
+    const hasHour = findCol(headers, KW.hour);
+    const hasGenre = findCol(headers, KW.genre);
+    const hasAdGroup = findCol(headers, KW.adgroup);
     if(hasGenre) genre = {name, rows, headers};
     else if(hasHour) hourly = {name, rows, headers};
     else if(hasAdGroup) adgroup = {name, rows, headers};
@@ -383,10 +429,10 @@ function buildDataset(sheets){
 
   if(sheets.weekly){
     const {rows, headers} = sheets.weekly;
-    const cCamp = col(rows,headers,[['campaign']]);
-    const cWeek = col(rows,headers,[['week']]);
-    const cImp  = col(rows,headers,[['impression']]);
-    const cPcv  = col(rows,headers,[['completed']],);
+    const cCamp = col(rows,headers,KW.campaign);
+    const cWeek = col(rows,headers,KW.week);
+    const cImp  = col(rows,headers,KW.impression);
+    const cPcv  = col(rows,headers,KW.completed);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
@@ -395,20 +441,21 @@ function buildDataset(sheets){
   }
   if(sheets.adgroup){
     const {rows, headers} = sheets.adgroup;
-    const cCamp = col(rows,headers,[['campaign']]);
-    const cAdg  = col(rows,headers,[['ad','group']]);
-    const cImp  = col(rows,headers,[['impression']]);
+    const cCamp = col(rows,headers,KW.campaign);
+    const cAdg  = col(rows,headers,KW.adgroup);
+    const cImp  = col(rows,headers,KW.impression);
+    const cPcv  = col(rows,headers,KW.completed);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
-      out.adgroup.push({campaign:camp, adgroup:r[cAdg], impressions:Number(r[cImp])||0});
+      out.adgroup.push({campaign:camp, adgroup:r[cAdg], impressions:Number(r[cImp])||0, pcv:Number(r[cPcv])||0});
     });
   }
   if(sheets.hourly){
     const {rows, headers} = sheets.hourly;
-    const cCamp = col(rows,headers,[['campaign']]);
-    const cHour = col(rows,headers,[['hour']]);
-    const cImp  = col(rows,headers,[['impression']]);
+    const cCamp = col(rows,headers,KW.campaign);
+    const cHour = col(rows,headers,KW.hour);
+    const cImp  = col(rows,headers,KW.impression);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
@@ -417,9 +464,9 @@ function buildDataset(sheets){
   }
   if(sheets.genre){
     const {rows, headers} = sheets.genre;
-    const cCamp = col(rows,headers,[['campaign']]);
-    const cGen  = col(rows,headers,[['genre']]);
-    const cImp  = col(rows,headers,[['impression']]);
+    const cCamp = col(rows,headers,KW.campaign);
+    const cGen  = col(rows,headers,KW.genre);
+    const cImp  = col(rows,headers,KW.impression);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
@@ -479,6 +526,7 @@ function render(){
   renderDaypart(selected);
   renderPublishers(selected);
   renderGenre(selected);
+  renderAdGroupTable(selected);
 }
 
 function inSel(camp, selected){ return selected.includes(camp); }
@@ -518,20 +566,20 @@ function renderKPIsAndWeekly(selected){
     data:{
       labels: labels.map(w=>'W'+w),
       datasets:[
-        {label:'Impresiones', data:impData, borderColor:'#FF5B3C', backgroundColor:'#FF5B3C22',
-         tension:.3, fill:true, pointRadius:3, pointBackgroundColor:'#FF5B3C', borderWidth:2.5},
-        {label:'Player Completed Views', data:pcvData, borderColor:'#0F9E96', backgroundColor:'transparent',
-         borderDash:[5,4], tension:.3, pointRadius:3, pointBackgroundColor:'#0F9E96', borderWidth:2.5},
+        {label:'Impresiones', data:impData, borderColor:'#4472C4', backgroundColor:'#4472C422',
+         tension:.3, fill:true, pointRadius:3, pointBackgroundColor:'#4472C4', borderWidth:2.5},
+        {label:'Player Completed Views', data:pcvData, borderColor:'#ED7D31', backgroundColor:'transparent',
+         tension:.3, pointRadius:3, pointBackgroundColor:'#ED7D31', borderWidth:2.5},
       ]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index', intersect:false},
       plugins:{ legend:{position:'top', align:'end', labels:{boxWidth:10, boxHeight:10, usePointStyle:true, font:{family:'Inter', size:12}}},
-                tooltip:{backgroundColor:'#0F1B33', titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'Inter'}} },
+                tooltip:{backgroundColor:'#00004F', titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'Inter'}} },
       scales:{
         x:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}}},
-        y:{grid:{color:'#CBD3E0'}, ticks:{font:{family:'IBM Plex Mono', size:11}, callback:v=>v.toLocaleString('es-ES')}}
+        y:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}, callback:v=>v.toLocaleString('es-ES')}}
       }
     }
   };
@@ -539,7 +587,8 @@ function renderKPIsAndWeekly(selected){
   else { chartWeekly = new Chart(ctx, cfg); }
 }
 
-/* ---------- Daypart broadcast strip ---------- */
+/* ---------- Daypart doughnut (rosco) ---------- */
+let chartDaypart=null;
 function renderDaypart(selected){
   const rows = DATA.hourly.filter(r => inSel(r.campaign, selected) && r.impressions > 0);
   const totals = DAYPARTS.map(dp => ({...dp, value:0}));
@@ -550,11 +599,23 @@ function renderDaypart(selected){
   });
   const sum = totals.reduce((a,b)=>a+b.value,0) || 1;
 
-  const stripHtml = totals.map(d=>{
-    const pct = d.value/sum*100;
-    if(pct<0.5) return '';
-    return `<div class="seg" style="width:${pct}%; background:${d.color};" title="${d.label} ${pct.toFixed(1)}%">${pct>=8? pct.toFixed(0)+'%':''}</div>`;
-  }).join('');
+  const ctx = document.getElementById('chart-daypart');
+  const cfg = {
+    type:'doughnut',
+    data:{
+      labels: totals.map(d=>d.label),
+      datasets:[{ data: totals.map(d=>d.value), backgroundColor: totals.map(d=>d.color), borderColor:'#FFFFFF', borderWidth:2, hoverOffset:6 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{
+        legend:{ display:false },
+        tooltip:{ backgroundColor:'#00004F', callbacks:{ label: c => `${c.label}: ${(c.parsed/sum*100).toFixed(1)}% (${c.parsed.toLocaleString('es-ES')})` } }
+      }
+    }
+  };
+  if(chartDaypart){ chartDaypart.data=cfg.data; chartDaypart.update(); }
+  else { chartDaypart = new Chart(ctx, cfg); }
 
   const legendHtml = totals.map(d=>{
     const pct = sum? (d.value/sum*100):0;
@@ -564,8 +625,7 @@ function renderDaypart(selected){
       <div style="color:var(--ink-faint); font-size:10.5px;">${d.range}</div>
     </div>`;
   }).join('');
-
-  el('daypart-strip').innerHTML = `<div class="strip">${stripHtml}</div><div class="strip-legend">${legendHtml}</div>`;
+  el('daypart-legend').innerHTML = legendHtml;
 }
 
 /* ---------- Publishers leaderboard ---------- */
@@ -611,7 +671,7 @@ function renderGenre(selected){
   const total = final.reduce((a,[,v])=>a+v,0) || 1;
   const labels = final.map(([g])=>g);
   const values = final.map(([,v])=>v);
-  const colors = labels.map(l => l==='Otros' ? '#8C93A4' : '#FF5B3C');
+  const colors = labels.map(l => l==='Otros' ? '#8C93A4' : '#86EE18');
 
   const ctx = document.getElementById('chart-genre');
   const cfg = {
@@ -621,7 +681,7 @@ function renderGenre(selected){
       indexAxis:'y', responsive:true, maintainAspectRatio:false,
       plugins:{ legend:{display:false},
         tooltip:{callbacks:{label: ctx => ctx.parsed.x + '% · ' + values[ctx.dataIndex].toLocaleString('es-ES') + ' impr.'},
-          backgroundColor:'#0F1B33'} },
+          backgroundColor:'#00004F'} },
       scales:{
         x:{grid:{color:'#CBD3E0'}, ticks:{callback:v=>v+'%', font:{family:'IBM Plex Mono', size:11}}},
         y:{grid:{display:false}, ticks:{font:{family:'Inter', size:12, weight:600}}}
@@ -630,6 +690,51 @@ function renderGenre(selected){
   };
   if(chartGenre){ chartGenre.data=cfg.data; chartGenre.options=cfg.options; chartGenre.update(); }
   else { chartGenre = new Chart(ctx, cfg); }
+}
+
+/* ---------- Ad Group table ---------- */
+function renderAdGroupTable(selected){
+  const rows = DATA.adgroup.filter(r => inSel(r.campaign, selected) && (r.impressions > 0 || r.pcv > 0));
+  const totals = new Map(); // adgroup -> {impressions, pcv}
+  rows.forEach(r=>{
+    const key = r.adgroup || '(sin nombre)';
+    if(!totals.has(key)) totals.set(key, {impressions:0, pcv:0});
+    const t = totals.get(key);
+    t.impressions += r.impressions;
+    t.pcv += r.pcv;
+  });
+  const sorted = Array.from(totals.entries()).sort((a,b)=>b[1].impressions-a[1].impressions);
+
+  const tbody = el('adgroup-tbody');
+  const tfoot = el('adgroup-tfoot');
+
+  if(!sorted.length){
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-note">No hay datos de Ad Group para esta selección.</td></tr>`;
+    tfoot.innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = sorted.map(([name, t])=>{
+    const pub = extractPublisher(name) || '—';
+    const vcr = t.impressions>0 ? (t.pcv/t.impressions*100) : 0;
+    return `<tr>
+      <td class="agt-name" title="${escAttr(name)}">${escHtml(name)}</td>
+      <td>${escHtml(pub)}</td>
+      <td class="mono num">${t.impressions.toLocaleString('es-ES')}</td>
+      <td class="mono num">${t.pcv.toLocaleString('es-ES')}</td>
+      <td class="mono num">${vcr.toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  const totalImp = sorted.reduce((a,[,t])=>a+t.impressions,0);
+  const totalPcv = sorted.reduce((a,[,t])=>a+t.pcv,0);
+  const totalVcr = totalImp>0 ? (totalPcv/totalImp*100) : 0;
+  tfoot.innerHTML = `<tr class="agt-total">
+      <td colspan="2">TOTAL (${sorted.length} ad groups)</td>
+      <td class="mono num">${totalImp.toLocaleString('es-ES')}</td>
+      <td class="mono num">${totalPcv.toLocaleString('es-ES')}</td>
+      <td class="mono num">${totalVcr.toFixed(1)}%</td>
+    </tr>`;
 }
 </script>
 </body>
