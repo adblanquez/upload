@@ -6,7 +6,7 @@
 <title>Panel de Campañas · Media Performance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" crossorigin="anonymous"></script>
 <style>
@@ -34,11 +34,11 @@
       linear-gradient(180deg, rgba(15,27,51,.03) 0px, transparent 1px) 0 0/100% 32px,
       var(--bg);
     color:var(--ink);
-    font-family:'Inter',system-ui,sans-serif;
+    font-family:'Public Sans',system-ui,sans-serif;
     min-height:100vh;
   }
   .mono{font-family:'IBM Plex Mono',monospace;}
-  .display{font-family:'Big Shoulders Display',sans-serif; font-weight:800; letter-spacing:.01em;}
+  .display{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:.01em;}
   a{color:inherit;}
 
   /* ---------- TOP BAR ---------- */
@@ -50,12 +50,12 @@
   .brand{display:flex; align-items:center; gap:12px;}
   .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);
     box-shadow:0 0 0 3px var(--coral-soft);}
-  .brand h1{font-size:19px; margin:0; font-family:'Big Shoulders Display',sans-serif; font-weight:800; letter-spacing:.03em; text-transform:uppercase;}
+  .brand h1{font-size:19px; margin:0; font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:.03em; text-transform:uppercase;}
   .brand span{color:var(--ink-faint); font-size:12px;}
   .btn{
     border:1px solid var(--line-strong); background:var(--paper); color:var(--ink);
     padding:9px 16px; border-radius:999px; font-size:13px; font-weight:600; cursor:pointer;
-    font-family:'Inter',sans-serif; transition:.15s;
+    font-family:'Public Sans',sans-serif; transition:.15s;
   }
   .btn:hover{background:var(--ink); color:var(--paper);}
   .btn:focus-visible, select:focus-visible, input:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
@@ -68,7 +68,7 @@
     border:1px solid var(--coral); padding:5px 12px; border-radius:999px; background:var(--coral-soft);
   }
   .hero h2{
-    font-family:'Big Shoulders Display',sans-serif; font-weight:800; text-transform:uppercase;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; text-transform:uppercase;
     font-size:clamp(40px,6vw,68px); line-height:.96; margin:18px 0 14px; letter-spacing:.005em;
   }
   .hero p{color:var(--ink-muted); font-size:17px; max-width:560px; line-height:1.55; margin:0 0 40px;}
@@ -106,7 +106,7 @@
   .field label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); font-weight:600;}
   select{
     appearance:none; border:1.5px solid var(--line-strong); border-radius:8px; background:var(--paper);
-    padding:10px 34px 10px 12px; font-size:14px; font-family:'Inter',sans-serif; font-weight:500;
+    padding:10px 34px 10px 12px; font-size:14px; font-family:'Public Sans',sans-serif; font-weight:500;
     color:var(--ink); cursor:pointer;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%230F1B33'/></svg>");
     background-repeat:no-repeat; background-position:right 12px center;
@@ -122,7 +122,7 @@
     padding:18px 20px; box-shadow:var(--shadow); position:relative; overflow:hidden;
   }
   .kpi .label{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); font-weight:700; margin-bottom:10px;}
-  .kpi .val{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:34px; line-height:1;}
+  .kpi .val{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px; line-height:1;}
   .kpi .sub{font-size:12px; color:var(--ink-muted); margin-top:6px;}
   .kpi::after{content:""; position:absolute; right:-10px; top:-10px; width:60px; height:60px; border-radius:50%;
     background:var(--paper-alt); opacity:.5;}
@@ -152,7 +152,7 @@
   /* publisher leaderboard */
   .leaderboard{display:flex; flex-direction:column; gap:10px;}
   .lb-row{display:grid; grid-template-columns:22px 90px 1fr 60px; align-items:center; gap:10px;}
-  .lb-rank{font-family:'Big Shoulders Display',sans-serif; font-weight:800; color:var(--ink-faint); font-size:16px;}
+  .lb-rank{font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--ink-faint); font-size:16px;}
   .lb-name{font-size:12.5px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .lb-bar-bg{background:var(--paper-alt); border-radius:6px; height:10px; overflow:hidden;}
   .lb-bar{height:100%; background:var(--coral); border-radius:6px;}
@@ -160,12 +160,22 @@
 
   .empty-note{font-size:13px; color:var(--ink-faint); text-align:center; padding:40px 0;}
 
+  .week-legend{margin-top:16px; border-top:1px solid var(--line); padding-top:12px;}
+  .week-legend summary{cursor:pointer; font-size:12.5px; font-weight:600; color:var(--ink-muted); user-select:none;}
+  .week-legend summary:hover{color:var(--ink);}
+  .week-legend[open] summary{color:var(--ink); margin-bottom:4px;}
+
   .adgroup-table{width:100%; border-collapse:collapse; font-size:13px; min-width:560px;}
   .adgroup-table thead th{
     text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.06em;
     color:var(--ink-faint); font-weight:700; padding:0 10px 10px; border-bottom:1.5px solid var(--line-strong);
   }
   .adgroup-table thead th:not(:first-child){text-align:right;}
+  .adgroup-table thead th.sortable{cursor:pointer; user-select:none; position:relative; transition:color .12s;}
+  .adgroup-table thead th.sortable:hover{color:var(--ink);}
+  .adgroup-table thead th.sortable::after{content:'↕'; opacity:.35; margin-left:5px; font-size:10px;}
+  .adgroup-table thead th.sortable.sort-asc::after{content:'↑'; opacity:1; color:var(--coral);}
+  .adgroup-table thead th.sortable.sort-desc::after{content:'↓'; opacity:1; color:var(--coral);}
   .adgroup-table tbody td{padding:9px 10px; border-bottom:1px solid var(--line);}
   .adgroup-table tbody tr:hover{background:var(--paper-alt);}
   .adgroup-table td.num{text-align:right;}
@@ -216,6 +226,10 @@
 <!-- ================= PAGE 2: DASHBOARD ================= -->
 <section id="page-dashboard" style="display:none;">
   <div class="filterbar">
+    <div class="field adv">
+      <label>Advertiser</label>
+      <select id="sel-advertiser"></select>
+    </div>
     <div class="field c1">
       <label><span class="swatch" style="background:var(--coral)"></span>Campaña 1</label>
       <select id="sel-camp1"></select>
@@ -241,6 +255,14 @@
       <h4>Evolución semanal</h4>
       <div class="meta">WEEK 1 = PRIMERA SEMANA CON IMPRESIONES &gt; 0</div>
       <div class="chart-wrap tall"><canvas id="chart-weekly"></canvas></div>
+      <details class="week-legend">
+        <summary>Ver equivalencia de semanas (archivo original → dashboard)</summary>
+        <table class="adgroup-table" style="min-width:0; margin-top:10px;">
+          <thead><tr><th>Semana mostrada</th><th>Semana en el archivo</th><th>Fechas (lun–dom)</th></tr></thead>
+          <tbody id="week-legend-body"></tbody>
+        </table>
+        <div id="week-legend-note" class="meta" style="margin:10px 0 0;"></div>
+      </details>
     </div>
 
     <div class="card">
@@ -268,7 +290,13 @@
       <div style="overflow-x:auto;">
         <table class="adgroup-table" id="adgroup-table">
           <thead>
-            <tr><th>Ad Group</th><th>Publisher</th><th>Impresiones</th><th>Completed Views</th><th>VCR</th></tr>
+            <tr>
+              <th class="sortable" data-sort="adgroup">Ad Group</th>
+              <th class="sortable" data-sort="publisher">Publisher</th>
+              <th class="sortable" data-sort="impressions">Impresiones</th>
+              <th class="sortable" data-sort="pcv">Completed Views</th>
+              <th class="sortable" data-sort="vcr">VCR</th>
+            </tr>
           </thead>
           <tbody id="adgroup-tbody"></tbody>
           <tfoot id="adgroup-tfoot"></tfoot>
@@ -300,12 +328,14 @@ function norm(s){
 
 const KW = {
   campaign:  [['campa']],                    // Campaign / Campaña
+  advertiser:[['advertiser'],['anunciante']],
   week:      [['week'],['semana']],
   hour:      [['hour'],['hora']],
   genre:     [['genre'],['genero']],
   adgroup:   [['ad','group'],['grupo']],
   impression:[['impres']],                   // Impressions / Impresiones
   completed: [['complet']],                  // Completed / Completadas
+  date:      [['date'],['fecha']],
 };
 
 function findCol(headers, keywordsList){
@@ -322,7 +352,12 @@ function sheetRows(ws){
 }
 
 function detectSheets(wb){
-  const candidates = wb.SheetNames.filter(n => !/^(graficos|filtro|dashboard)$/i.test(n));
+  // Nuevo formato: solo pestañas cuyo nombre termina en "data" (Sheet1_data, Sheet2_data...) son relevantes.
+  let candidates = wb.SheetNames.filter(n => /data\s*$/i.test(n.trim()));
+  if(!candidates.length){
+    // Compatibilidad con el formato antiguo (Sheet1, Sheet2... sin sufijo _data)
+    candidates = wb.SheetNames.filter(n => !/^(graficos|filtro|dashboard)$/i.test(n));
+  }
   let weekly=null, adgroup=null, hourly=null, genre=null;
   for(const name of candidates){
     const rows = sheetRows(wb.Sheets[name]);
@@ -425,56 +460,120 @@ el('btn-reset').addEventListener('click', ()=>{
    ============================================================ */
 function buildDataset(sheets){
   const campaignSet = new Set();
+  const advertiserSet = new Set();
+  const campaignAdvertiser = new Map(); // campaign -> advertiser
   const out = {weekly:[], adgroup:[], hourly:[], genre:[]};
+
+  function trackAdv(camp, adv){
+    if(adv){ advertiserSet.add(adv); if(!campaignAdvertiser.has(camp)) campaignAdvertiser.set(camp, adv); }
+  }
 
   if(sheets.weekly){
     const {rows, headers} = sheets.weekly;
     const cCamp = col(rows,headers,KW.campaign);
+    const cAdv  = col(rows,headers,KW.advertiser);
     const cWeek = col(rows,headers,KW.week);
     const cImp  = col(rows,headers,KW.impression);
     const cPcv  = col(rows,headers,KW.completed);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
-      out.weekly.push({campaign:camp, week:Number(r[cWeek]), impressions:Number(r[cImp])||0, pcv:Number(r[cPcv])||0});
+      const adv = cAdv ? r[cAdv] : null;
+      trackAdv(camp, adv);
+      out.weekly.push({campaign:camp, advertiser:adv, week:Number(r[cWeek]), impressions:Number(r[cImp])||0, pcv:Number(r[cPcv])||0});
     });
   }
   if(sheets.adgroup){
     const {rows, headers} = sheets.adgroup;
     const cCamp = col(rows,headers,KW.campaign);
+    const cAdv  = col(rows,headers,KW.advertiser);
     const cAdg  = col(rows,headers,KW.adgroup);
     const cImp  = col(rows,headers,KW.impression);
     const cPcv  = col(rows,headers,KW.completed);
+    const cDate = col(rows,headers,KW.date);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
-      out.adgroup.push({campaign:camp, adgroup:r[cAdg], impressions:Number(r[cImp])||0, pcv:Number(r[cPcv])||0});
+      const adv = cAdv ? r[cAdv] : null;
+      trackAdv(camp, adv);
+      out.adgroup.push({campaign:camp, advertiser:adv, adgroup:r[cAdg], impressions:Number(r[cImp])||0, pcv:Number(r[cPcv])||0, date: cDate ? r[cDate] : null});
     });
   }
   if(sheets.hourly){
     const {rows, headers} = sheets.hourly;
     const cCamp = col(rows,headers,KW.campaign);
+    const cAdv  = col(rows,headers,KW.advertiser);
     const cHour = col(rows,headers,KW.hour);
     const cImp  = col(rows,headers,KW.impression);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
-      out.hourly.push({campaign:camp, hour:Number(r[cHour]), impressions:Number(r[cImp])||0});
+      const adv = cAdv ? r[cAdv] : null;
+      trackAdv(camp, adv);
+      out.hourly.push({campaign:camp, advertiser:adv, hour:Number(r[cHour]), impressions:Number(r[cImp])||0});
     });
   }
   if(sheets.genre){
     const {rows, headers} = sheets.genre;
     const cCamp = col(rows,headers,KW.campaign);
+    const cAdv  = col(rows,headers,KW.advertiser);
     const cGen  = col(rows,headers,KW.genre);
     const cImp  = col(rows,headers,KW.impression);
     rows.forEach(r=>{
       const camp=r[cCamp]; if(!camp) return;
       campaignSet.add(camp);
-      out.genre.push({campaign:camp, genre:r[cGen], impressions:Number(r[cImp])||0});
+      const adv = cAdv ? r[cAdv] : null;
+      trackAdv(camp, adv);
+      out.genre.push({campaign:camp, advertiser:adv, genre:r[cGen], impressions:Number(r[cImp])||0});
     });
   }
 
   DATA = {...out, campaigns: Array.from(campaignSet).sort((a,b)=>String(a).localeCompare(String(b)))};
+  DATA.advertisers = Array.from(advertiserSet).sort((a,b)=>String(a).localeCompare(String(b)));
+  DATA.campaignAdvertiser = campaignAdvertiser;
+  DATA.referenceYear = detectReferenceYear(out.adgroup);
+}
+
+/* ---------- Date helpers: map raw "Calendar Week" number -> real Mon-Sun dates ---------- */
+function parseAnyDate(v){
+  if(v == null) return null;
+  if(v instanceof Date) return v;
+  if(typeof v === 'number'){
+    if(typeof XLSX !== 'undefined' && XLSX.SSF){
+      const s = XLSX.SSF.format('yyyy-mm-dd', v);
+      const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if(m) return new Date(Date.UTC(+m[1], +m[2]-1, +m[3]));
+    }
+    return null;
+  }
+  if(typeof v === 'string'){
+    const m = v.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if(m) return new Date(Date.UTC(+m[3], +m[2]-1, +m[1]));
+  }
+  return null;
+}
+function detectReferenceYear(adgroupRows){
+  const counts = new Map();
+  adgroupRows.forEach(r=>{
+    const d = parseAnyDate(r.date);
+    if(d){ const y=d.getUTCFullYear(); counts.set(y,(counts.get(y)||0)+1); }
+  });
+  if(!counts.size) return null;
+  return Array.from(counts.entries()).sort((a,b)=>b[1]-a[1])[0][0];
+}
+function isoWeekMonday(year, week){
+  const jan4 = new Date(Date.UTC(year,0,4));
+  const jan4Day = (jan4.getUTCDay()+6)%7; // Mon=0
+  const week1Monday = new Date(jan4.getTime() - jan4Day*86400000);
+  return new Date(week1Monday.getTime() + (week-1)*7*86400000);
+}
+const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+function fmtShort(d){ return `${String(d.getUTCDate()).padStart(2,'0')} ${MONTHS_ES[d.getUTCMonth()]}`; }
+function weekDateRangeLabel(year, week){
+  if(!year) return null;
+  const mon = isoWeekMonday(year, week);
+  const sun = new Date(mon.getTime() + 6*86400000);
+  return `${fmtShort(mon)} – ${fmtShort(sun)}${sun.getUTCFullYear()!==year?' '+sun.getUTCFullYear():''}`;
 }
 
 /* ============================================================
@@ -484,7 +583,7 @@ let chartWeekly=null, chartGenre=null;
 if(typeof Chart !== 'undefined'){
   Chart.defaults.color = '#5B6478';
   Chart.defaults.borderColor = '#CBD3E0';
-  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.font.family = "'Public Sans', sans-serif";
 }
 
 function showDashboard(){
@@ -492,14 +591,40 @@ function showDashboard(){
   el('page-dashboard').style.display='block';
   el('btn-reset').style.display='inline-block';
 
-  const s1 = el('sel-camp1'), s2 = el('sel-camp2');
-  s1.innerHTML = DATA.campaigns.map(c=>`<option value="${escAttr(c)}">${escHtml(c)}</option>`).join('');
-  s2.innerHTML = '<option value="">— Ninguna —</option>' + DATA.campaigns.map(c=>`<option value="${escAttr(c)}">${escHtml(c)}</option>`).join('');
-  if(DATA.campaigns[1]) s2.value = DATA.campaigns[1];
+  const advSel = el('sel-advertiser');
+  if(DATA.advertisers.length){
+    advSel.style.display='';
+    advSel.closest('.field').style.display='';
+    advSel.innerHTML = '<option value="">— Todos los advertisers —</option>' +
+      DATA.advertisers.map(a=>`<option value="${escAttr(a)}">${escHtml(a)}</option>`).join('');
+  } else {
+    advSel.closest('.field').style.display='none';
+  }
+  advSel.addEventListener('change', ()=>{ populateCampaignSelects(); render(); });
 
-  s1.addEventListener('change', render);
-  s2.addEventListener('change', render);
+  populateCampaignSelects();
+
+  el('sel-camp1').addEventListener('change', render);
+  el('sel-camp2').addEventListener('change', render);
   render();
+}
+
+function campaignsForAdvertiser(advertiser){
+  if(!advertiser) return DATA.campaigns;
+  return DATA.campaigns.filter(c => DATA.campaignAdvertiser.get(c) === advertiser);
+}
+
+function populateCampaignSelects(){
+  const advertiser = el('sel-advertiser').value;
+  const camps = campaignsForAdvertiser(advertiser);
+  const s1 = el('sel-camp1'), s2 = el('sel-camp2');
+  const prevC1 = s1.value, prevC2 = s2.value;
+
+  s1.innerHTML = camps.map(c=>`<option value="${escAttr(c)}">${escHtml(c)}</option>`).join('');
+  s2.innerHTML = '<option value="">— Ninguna —</option>' + camps.map(c=>`<option value="${escAttr(c)}">${escHtml(c)}</option>`).join('');
+
+  s1.value = camps.includes(prevC1) ? prevC1 : (camps[0] || '');
+  s2.value = camps.includes(prevC2) ? prevC2 : '';
 }
 
 function escHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
@@ -575,8 +700,8 @@ function renderKPIsAndWeekly(selected){
     options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index', intersect:false},
-      plugins:{ legend:{position:'top', align:'end', labels:{boxWidth:10, boxHeight:10, usePointStyle:true, font:{family:'Inter', size:12}}},
-                tooltip:{backgroundColor:'#00004F', titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'Inter'}} },
+      plugins:{ legend:{position:'top', align:'end', labels:{boxWidth:10, boxHeight:10, usePointStyle:true, font:{family:'Public Sans', size:12}}},
+                tooltip:{backgroundColor:'#00004F', titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'Public Sans'}} },
       scales:{
         x:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}}},
         y:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}, callback:v=>v.toLocaleString('es-ES')}}
@@ -585,6 +710,24 @@ function renderKPIsAndWeekly(selected){
   };
   if(chartWeekly){ chartWeekly.data=cfg.data; chartWeekly.update(); }
   else { chartWeekly = new Chart(ctx, cfg); }
+  renderWeekLegend(weeksSorted);
+}
+
+function renderWeekLegend(weeksSorted){
+  const box = el('week-legend-body');
+  if(!weeksSorted.length){ box.innerHTML = ''; return; }
+  const year = DATA.referenceYear;
+  box.innerHTML = weeksSorted.map((w,i)=>{
+    const range = weekDateRangeLabel(year, w);
+    return `<tr>
+      <td class="mono">Week ${i+1}</td>
+      <td class="mono">Semana calendario ${w}</td>
+      <td class="mono">${range ? range : '—'}</td>
+    </tr>`;
+  }).join('');
+  el('week-legend-note').textContent = year
+    ? `Año de referencia detectado: ${year} (a partir de las fechas del Ad Group).`
+    : `No se han encontrado fechas en el archivo para calcular el rango exacto; se muestra solo el número de semana original.`;
 }
 
 /* ---------- Daypart doughnut (rosco) ---------- */
@@ -684,7 +827,7 @@ function renderGenre(selected){
           backgroundColor:'#00004F'} },
       scales:{
         x:{grid:{color:'#CBD3E0'}, ticks:{callback:v=>v+'%', font:{family:'IBM Plex Mono', size:11}}},
-        y:{grid:{display:false}, ticks:{font:{family:'Inter', size:12, weight:600}}}
+        y:{grid:{display:false}, ticks:{font:{family:'Public Sans', size:12, weight:600}}}
       }
     }
   };
@@ -692,7 +835,10 @@ function renderGenre(selected){
   else { chartGenre = new Chart(ctx, cfg); }
 }
 
-/* ---------- Ad Group table ---------- */
+/* ---------- Ad Group table (con orden por columna) ---------- */
+let adGroupTableData = [];
+let adGroupSort = {col:'impressions', dir:'desc'};
+
 function renderAdGroupTable(selected){
   const rows = DATA.adgroup.filter(r => inSel(r.campaign, selected) && (r.impressions > 0 || r.pcv > 0));
   const totals = new Map(); // adgroup -> {impressions, pcv}
@@ -703,31 +849,51 @@ function renderAdGroupTable(selected){
     t.impressions += r.impressions;
     t.pcv += r.pcv;
   });
-  const sorted = Array.from(totals.entries()).sort((a,b)=>b[1].impressions-a[1].impressions);
 
+  adGroupTableData = Array.from(totals.entries()).map(([name, t])=>({
+    adgroup: name,
+    publisher: extractPublisher(name) || '—',
+    impressions: t.impressions,
+    pcv: t.pcv,
+    vcr: t.impressions>0 ? (t.pcv/t.impressions*100) : 0,
+  }));
+
+  renderAdGroupRows();
+}
+
+function renderAdGroupRows(){
   const tbody = el('adgroup-tbody');
   const tfoot = el('adgroup-tfoot');
 
-  if(!sorted.length){
+  document.querySelectorAll('#adgroup-table th.sortable').forEach(th=>{
+    th.classList.toggle('sort-asc', th.dataset.sort===adGroupSort.col && adGroupSort.dir==='asc');
+    th.classList.toggle('sort-desc', th.dataset.sort===adGroupSort.col && adGroupSort.dir==='desc');
+  });
+
+  if(!adGroupTableData.length){
     tbody.innerHTML = `<tr><td colspan="5" class="empty-note">No hay datos de Ad Group para esta selección.</td></tr>`;
     tfoot.innerHTML = '';
     return;
   }
 
-  tbody.innerHTML = sorted.map(([name, t])=>{
-    const pub = extractPublisher(name) || '—';
-    const vcr = t.impressions>0 ? (t.pcv/t.impressions*100) : 0;
-    return `<tr>
-      <td class="agt-name" title="${escAttr(name)}">${escHtml(name)}</td>
-      <td>${escHtml(pub)}</td>
-      <td class="mono num">${t.impressions.toLocaleString('es-ES')}</td>
-      <td class="mono num">${t.pcv.toLocaleString('es-ES')}</td>
-      <td class="mono num">${vcr.toFixed(1)}%</td>
-    </tr>`;
-  }).join('');
+  const {col, dir} = adGroupSort;
+  const mult = dir==='asc' ? 1 : -1;
+  const sorted = [...adGroupTableData].sort((a,b)=>{
+    const av=a[col], bv=b[col];
+    if(typeof av === 'string') return av.localeCompare(bv) * mult;
+    return (av-bv) * mult;
+  });
 
-  const totalImp = sorted.reduce((a,[,t])=>a+t.impressions,0);
-  const totalPcv = sorted.reduce((a,[,t])=>a+t.pcv,0);
+  tbody.innerHTML = sorted.map(r=>`<tr>
+      <td class="agt-name" title="${escAttr(r.adgroup)}">${escHtml(r.adgroup)}</td>
+      <td>${escHtml(r.publisher)}</td>
+      <td class="mono num">${r.impressions.toLocaleString('es-ES')}</td>
+      <td class="mono num">${r.pcv.toLocaleString('es-ES')}</td>
+      <td class="mono num">${r.vcr.toFixed(1)}%</td>
+    </tr>`).join('');
+
+  const totalImp = sorted.reduce((a,t)=>a+t.impressions,0);
+  const totalPcv = sorted.reduce((a,t)=>a+t.pcv,0);
   const totalVcr = totalImp>0 ? (totalPcv/totalImp*100) : 0;
   tfoot.innerHTML = `<tr class="agt-total">
       <td colspan="2">TOTAL (${sorted.length} ad groups)</td>
@@ -736,6 +902,18 @@ function renderAdGroupTable(selected){
       <td class="mono num">${totalVcr.toFixed(1)}%</td>
     </tr>`;
 }
+
+document.querySelectorAll('#adgroup-table th.sortable').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const col = th.dataset.sort;
+    if(adGroupSort.col === col){
+      adGroupSort.dir = adGroupSort.dir==='asc' ? 'desc' : 'asc';
+    } else {
+      adGroupSort = {col, dir: (col==='adgroup'||col==='publisher') ? 'asc' : 'desc'};
+    }
+    renderAdGroupRows();
+  });
+});
 </script>
 </body>
 </html>
