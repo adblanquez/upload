@@ -706,7 +706,7 @@ function renderKPIsAndWeekly(selected){
                 tooltip:{backgroundColor:'#00004F', titleFont:{family:'IBM Plex Mono'}, bodyFont:{family:'Public Sans'}} },
       scales:{
         x:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}}},
-        y:{grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}, callback:v=>v.toLocaleString('es-ES')}}
+        y:{min:0, grid:{display:false}, ticks:{font:{family:'IBM Plex Mono', size:11}, callback:v=>v.toLocaleString('es-ES')}}
       }
     }
   };
