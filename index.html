@@ -312,7 +312,7 @@
 /* ============================================================
    PARSING & DATA HELPERS
    ============================================================ */
-const PUBLISHERS = ['Atresmedia','Disney','Mediaset','Netflix','Pulsa','Rakuten','SamsungTV','Samsung','TitanOs','Tv3','Sky'];
+const PUBLISHERS = ['Atresmedia','Disney','Mediaset','Netflix','Pulsa','Rakuten','SamsungTV','Samsung','TitanOs','Tv3','Sky','SST'];
 const PUBLISHER_LABEL = {Samsung:'SamsungTV', Tv3:'TV3', Sky:'SkyShowtime'};
 const DAYPARTS = [
   {key:'madrugada', label:'Madrugada', range:'01:00–06:00', color:'#00004F', test:h=>h>=1&&h<=6},
@@ -660,14 +660,22 @@ function inSel(camp, selected){ return selected.includes(camp); }
 
 /* ---------- Weekly + KPIs ---------- */
 function renderKPIsAndWeekly(selected){
-  const rows = DATA.weekly.filter(r => inSel(r.campaign, selected) && r.impressions > 0);
-  const weeksSorted = Array.from(new Set(rows.map(r=>r.week))).sort((a,b)=>a-b);
+  const allRows = DATA.weekly.filter(r => inSel(r.campaign, selected));
+  const weeksPresent = Array.from(new Set(allRows.map(r=>r.week))).filter(w=>!isNaN(w)).sort((a,b)=>a-b);
+
+  // Rango continuo: si falta una semana entre medias, se rellena con 0 en vez de saltarla.
+  let weeksSorted = [];
+  if(weeksPresent.length){
+    const minW = weeksPresent[0], maxW = weeksPresent[weeksPresent.length-1];
+    for(let w=minW; w<=maxW; w++) weeksSorted.push(w);
+  }
   const weekMap = new Map(weeksSorted.map((w,i)=>[w, i+1]));
 
-  const agg = new Map(); // weekNum -> {impressions, pcv}
-  rows.forEach(r=>{
+  const agg = new Map(); // weekNum mostrado -> {impressions, pcv}
+  weeksSorted.forEach((w,i)=> agg.set(i+1, {impressions:0, pcv:0}));
+  allRows.forEach(r=>{
     const wn = weekMap.get(r.week);
-    if(!agg.has(wn)) agg.set(wn, {impressions:0, pcv:0});
+    if(wn == null) return;
     const a = agg.get(wn);
     a.impressions += r.impressions; a.pcv += r.pcv;
   });
@@ -710,7 +718,7 @@ function renderKPIsAndWeekly(selected){
       }
     }
   };
-  if(chartWeekly){ chartWeekly.data=cfg.data; chartWeekly.update(); }
+  if(chartWeekly){ chartWeekly.data=cfg.data; chartWeekly.options=cfg.options; chartWeekly.update(); }
   else { chartWeekly = new Chart(ctx, cfg); }
   renderWeekLegend(weeksSorted, labels.map(w=>agg.get(w).impressions));
 }
@@ -760,7 +768,7 @@ function renderDaypart(selected){
       }
     }
   };
-  if(chartDaypart){ chartDaypart.data=cfg.data; chartDaypart.update(); }
+  if(chartDaypart){ chartDaypart.data=cfg.data; chartDaypart.options=cfg.options; chartDaypart.update(); }
   else { chartDaypart = new Chart(ctx, cfg); }
 
   const legendHtml = totals.map(d=>{
@@ -818,13 +826,12 @@ function renderGenre(selected){
   const top9 = sorted.slice(0,9);
   const otherSum = forcedOther + sorted.slice(9).reduce((a,[,v])=>a+v,0);
   const final = [...top9];
-  if(otherSum>0) final.push(['Otros', otherSum]);
-  final.sort((a,b)=>b[1]-a[1]);
+  if(otherSum>0) final.push(['Resto', otherSum]);
 
   const total = final.reduce((a,[,v])=>a+v,0) || 1;
   const labels = final.map(([g])=>g);
   const values = final.map(([,v])=>v);
-  const colors = labels.map(l => l==='Otros' ? '#8C93A4' : '#86EE18');
+  const colors = labels.map(l => l==='Resto' ? '#8C93A4' : '#86EE18');
 
   const ctx = document.getElementById('chart-genre');
   const cfg = {
